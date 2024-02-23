@@ -1,0 +1,295 @@
+===============================================================================
+Class declaration
+===============================================================================
+
+class MyClass extends ParentClass;
+
+---
+
+(program
+  (class_declaration
+    name: (identifier)
+    (class_heritage
+      parent: (identifier))))
+
+===============================================================================
+Class modifier declaration
+===============================================================================
+
+class ComplexClass extends Actor
+	config(MyConfig),
+	native,
+	HideCategories(Display, Lighting);
+
+---
+
+(program
+  (class_declaration
+    name: (identifier)
+    (class_heritage
+      parent: (identifier))
+    (class_modifier
+      (identifier))
+    (class_modifier)
+    (class_modifier
+      (identifier)
+      (identifier))))
+
+====
+return
+====
+
+return 123;
+
+---
+
+(program
+  (return_statement
+    (number)))
+
+===============================================================================
+Function declaration
+===============================================================================
+
+function int DoSomething() {
+	return 123;
+}
+
+---
+
+(program
+  (function_declaration
+    return_type: (type
+      (primitive_type))
+    name: (identifier)
+    parameters: (function_parameters)
+    body: (block
+      (return_statement
+        (number)))))
+
+===============================================================================
+Function modifiers declaration
+===============================================================================
+
+private simulated function Tick(Float delta) {}
+
+---
+
+(program
+  (function_declaration
+    (function_modifier)
+    (function_modifier)
+    name: (identifier)
+    parameters: (function_parameters
+      type: (type
+        (primitive_type))
+      name: (identifier))
+    body: (block)))
+
+===============================================================================
+Constant declaration
+===============================================================================
+
+const foo = "bar";
+
+---
+
+(program
+  (constant_declaration
+    (assignment_expression
+      left: (identifier)
+      right: (string
+        (string_fragment)))))
+
+===============================================================================
+Variable declaration
+===============================================================================
+
+var String MyVariable;
+
+---
+
+(program
+  (class_variable_declaration
+    type: (type
+      (primitive_type))
+    name: (identifier)))
+
+===============================================================================
+Array variable declaration
+===============================================================================
+
+var String MyVariable[20];
+
+---
+
+(program
+  (class_variable_declaration
+    type: (type
+      (primitive_type))
+    name: (array_identifier
+      (identifier)
+      (array_dimensions))))
+
+===============================================================================
+Function declaration with body
+===============================================================================
+
+event Timer() {
+	local SomeType MyThing;
+	myThing = "LOL";
+
+	myThing = 'NamedThing.What';
+
+	// reassign some property value
+	Super.MainThing.Again = myThing.TheThing;
+
+	return;
+}
+
+---
+
+(program
+  (function_declaration
+    name: (identifier)
+    parameters: (function_parameters)
+    body: (block
+      (local_variable_declaration
+        type: (type
+          (identifier))
+        name: (identifier))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (string
+            (string_fragment))))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (name
+            (nested_identifier
+              object: (identifier)
+              property: (property_identifier)))))
+      (comment)
+      (expression_statement
+        (assignment_expression
+          left: (nested_identifier
+            object: (member_expression
+              object: (identifier)
+              property: (property_identifier))
+            property: (property_identifier))
+          right: (nested_identifier
+            object: (identifier)
+            property: (property_identifier))))
+      (return_statement))))
+
+===============================================================================
+If statement
+===============================================================================
+
+if (NotThis || That) {
+	return urMum;
+} else if (!other) {
+  return None;
+}
+
+---
+
+(program
+  (if_statement
+    condition: (condition
+      (binary_expression
+        left: (identifier)
+        right: (identifier)))
+    consequence: (block
+      (return_statement
+        (identifier)))
+    alternative: (if_statement
+      condition: (condition
+        (unary_expression
+          operand: (identifier)))
+      consequence: (block
+        (return_statement
+          (identifier))))))
+
+===============================================================================
+For statement
+===============================================================================
+
+for (I = 0; I < Total; I++) {
+	continue;
+}
+
+---
+
+(program
+  (for_statement
+    init: (assignment_expression
+      left: (identifier)
+      right: (number))
+    condition: (binary_expression
+      left: (identifier)
+      right: (identifier))
+    update: (update_expression
+      argument: (identifier))
+    body: (block
+      (continue_statement))))
+
+===============================================================================
+While statement
+===============================================================================
+
+while (bTrue) {
+	if (!bTrue) x++;
+	else break;
+}
+
+---
+
+(program
+  (while_statement
+    condition: (identifier)
+    body: (block
+      (if_statement
+        condition: (condition
+          (unary_expression
+            operand: (identifier)))
+        consequence: (expression_statement
+          (update_expression
+            argument: (identifier)))
+        alternative: (break_statement)))))
+
+===============================================================================
+Do Until statement
+===============================================================================
+
+do i++;
+until (i >= 10);
+
+---
+
+(program
+  (do_until_statement
+    body: (expression_statement
+      (update_expression
+        argument: (identifier)))
+    condition: (binary_expression
+      left: (identifier)
+      right: (number))))
+
+===============================================================================
+Assert statement
+===============================================================================
+
+assert(shouldFail && "foo" != bar);
+
+---
+
+(program
+  (assert_statement
+    condition: (binary_expression
+      left: (identifier)
+      right: (binary_expression
+        left: (string
+          (string_fragment))
+        right: (identifier)))))

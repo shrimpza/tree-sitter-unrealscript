@@ -1,0 +1,111 @@
+===============================================================================
+Simple variable assignments
+===============================================================================
+
+lol = 123;
+lol99 = 13.37;
+lol = "hello world";
+lol = "multiple\nlines";
+bLol=true;
+
+---
+
+(program
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (number)))
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (number)))
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (string
+        (string_fragment))))
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (string
+        (string_fragment)
+        (escape_sequence)
+        (string_fragment))))
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (identifier))))
+
+===============================================================================
+Variable assignment
+===============================================================================
+
+lol = 123 + 8;
+lol = 123++;
+lol++;
+
+---
+
+(program
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (binary_expression
+        left: (number)
+        right: (number))))
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (update_expression
+        argument: (number))))
+  (expression_statement
+      (update_expression
+        argument: (identifier))))
+
+===============================================================================
+String operations
+===============================================================================
+
+s = "one"@two;
+s = "three" $ ("four" @ five);
+
+---
+
+(program
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (string_expression
+        left: (string
+          (string_fragment))
+        right: (identifier))))
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (string_expression
+        left: (string
+          (string_fragment))
+        right: (parenthesized_expression
+          (string_expression
+            left: (string
+              (string_fragment))
+            right: (identifier)))))))
+
+===============================================================================
+Variable update operations
+===============================================================================
+
+lol += 99.9;
+lol *= -2;
+
+---
+
+(program
+  (expression_statement
+    (augmented_assignment_expression
+      left: (identifier)
+      right: (number)))
+  (expression_statement
+      (augmented_assignment_expression
+        left: (identifier)
+        right: (number))))

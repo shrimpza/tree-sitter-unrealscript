@@ -1,0 +1,13 @@
+{
+  "name": "tree-sitter-unrealscript",
+  "version": "0.1.0",
+  "main": "bindings/node",
+  "author": "Kenneth Watson",
+  "license": "MIT",
+  "dependencies": {
+    "nan": "^2.18.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.21.0-pre-release-1"
+  }
+}
