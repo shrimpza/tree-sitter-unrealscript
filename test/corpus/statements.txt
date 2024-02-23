@@ -91,6 +91,7 @@ Constant declaration
 ===============================================================================
 
 const foo = "bar";
+const RF_NotForEdit = 0x00400000;
 
 ---
 
@@ -99,7 +100,11 @@ const foo = "bar";
     (assignment_expression
       left: (identifier)
       right: (string
-        (string_fragment)))))
+        (string_fragment))))
+  (constant_declaration
+    (assignment_expression
+      left: (identifier)
+      right: (number))))
 
 ===============================================================================
 Variable declaration
@@ -110,7 +115,7 @@ var String MyVariable;
 ---
 
 (program
-  (class_variable_declaration
+  (variable_declaration
     type: (type
       (primitive_type))
     name: (identifier)))
@@ -119,17 +124,33 @@ var String MyVariable;
 Array variable declaration
 ===============================================================================
 
-var String MyVariable[20];
+var() String MyVariable[20];
 
 ---
 
 (program
-  (class_variable_declaration
+  (variable_declaration
     type: (type
       (primitive_type))
     name: (array_identifier
       (identifier)
       (array_dimensions))))
+
+===============================================================================
+Configurable variable declaration
+===============================================================================
+
+var(Advanced,Display) String EditMe;
+
+---
+
+(program
+  (variable_declaration
+    editgroups: (identifier)
+    editgroups: (identifier)
+    type: (type
+      (primitive_type))
+    name: (identifier)))
 
 ===============================================================================
 Function declaration with body
@@ -293,3 +314,43 @@ assert(shouldFail && "foo" != bar);
         left: (string
           (string_fragment))
         right: (identifier)))))
+
+===============================================================================
+Enum declaration
+===============================================================================
+
+enum TheCoolEnum {
+	COOL_Foo,
+	COOL_Bar,
+}
+
+---
+
+(program
+  (enum_declaration
+    name: (identifier)
+    body: (enum_body
+      (identifier)
+      (identifier))))
+
+===============================================================================
+Variable enum declaration
+===============================================================================
+
+var private enum TheCoolEnum {
+	COOL_Foo,
+	COOL_Bar,
+} cool1, cool2;
+
+---
+
+(program
+  (variable_declaration
+    (variable_modifier)
+    (enum_declaration
+      name: (identifier)
+      body: (enum_body
+        (identifier)
+        (identifier)))
+    name: (identifier)
+    name: (identifier)))

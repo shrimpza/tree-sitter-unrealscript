@@ -8,11 +8,15 @@
         "named": true
       },
       {
-        "type": "class_variable_declaration",
+        "type": "enum_declaration",
         "named": true
       },
       {
         "type": "function_declaration",
+        "named": true
+      },
+      {
+        "type": "variable_declaration",
         "named": true
       }
     ]
@@ -597,54 +601,6 @@
     }
   },
   {
-    "type": "class_variable_declaration",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "array_identifier",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "nested_identifier",
-            "named": true
-          },
-          {
-            "type": "none",
-            "named": true
-          }
-        ]
-      },
-      "type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "type",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "variable_modifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "comment",
     "named": true,
     "fields": {}
@@ -704,6 +660,47 @@
         "types": [
           {
             "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "enum_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enum_declaration",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "enum_body",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -1321,6 +1318,126 @@
     }
   },
   {
+    "type": "variable_declaration",
+    "named": true,
+    "fields": {
+      "editgroups": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "array_identifier",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "nested_identifier",
+            "named": true
+          },
+          {
+            "type": "none",
+            "named": true
+          }
+        ]
+      },
+      "editorgroups": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "array_identifier",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "nested_identifier",
+            "named": true
+          },
+          {
+            "type": "none",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "array_identifier",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "nested_identifier",
+            "named": true
+          },
+          {
+            "type": "none",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
+          "type": "variable_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "variable_modifier",
     "named": true,
     "fields": {},
@@ -1594,6 +1711,10 @@
     "named": false
   },
   {
+    "type": "deprecated",
+    "named": false
+  },
+  {
     "type": "do",
     "named": false
   },
@@ -1607,6 +1728,10 @@
   },
   {
     "type": "else",
+    "named": false
+  },
+  {
+    "type": "enum",
     "named": false
   },
   {
@@ -1670,6 +1795,10 @@
     "named": false
   },
   {
+    "type": "input",
+    "named": false
+  },
+  {
     "type": "instanced",
     "named": false
   },
@@ -1687,6 +1816,10 @@
   },
   {
     "type": "local",
+    "named": false
+  },
+  {
+    "type": "localized",
     "named": false
   },
   {
@@ -1758,6 +1891,10 @@
     "named": false
   },
   {
+    "type": "public",
+    "named": false
+  },
+  {
     "type": "return",
     "named": false
   },
@@ -1807,6 +1944,10 @@
   },
   {
     "type": "transient",
+    "named": false
+  },
+  {
+    "type": "travel",
     "named": false
   },
   {

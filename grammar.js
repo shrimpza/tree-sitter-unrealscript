@@ -89,7 +89,8 @@ module.exports = grammar({
 		declaration: $ => choice(
 			$.class_declaration,
 			$.function_declaration,
-			$.class_variable_declaration,
+			$.variable_declaration,
+			$.enum_declaration
 		),
 
 		class_declaration: $ => seq(
@@ -166,12 +167,40 @@ module.exports = grammar({
 			';',
 		),
 
-		class_variable_declaration: $ => seq(
+		enum_declaration: $ => seq(
+			caseInsensitive('enum'),
+			field('name', $.identifier),
+			field('body', $.enum_body)
+		),
+		enum_body: $ => seq(
+			'{',
+			commaSep1($.identifier),
+			optional(','),
+			'}'
+		),
+
+		variable_declaration: $ => seq(
+			choice(
+				$._class_variable_declaration,
+				$._enum_variable_declaration,
+			),
+			';',
+		),
+
+		_class_variable_declaration: $ => seq(
 			caseInsensitive('var'),
+			field('editgroups', optional(seq('(', commaSep($._identifier), ')'))),
 			optional($.variable_modifier),
 			field('type', $.type),
 			commaSep1(field('name', $._identifier)),
-			';',
+		),
+
+		_enum_variable_declaration: $ => seq(
+			caseInsensitive('var'),
+			field('editorgroups', optional(seq('(', commaSep($._identifier), ')'))),
+			optional($.variable_modifier),
+			$.enum_declaration,
+			commaSep1(field('name', $._identifier))
 		),
 
 		local_variable_declaration: $ => seq(
@@ -239,7 +268,14 @@ module.exports = grammar({
 		variable_modifier: $ => choice(
 			caseInsensitive('static'),
 			caseInsensitive('private'),
+			caseInsensitive('public'),
+			caseInsensitive('protected'),
+			caseInsensitive('const'),
 			caseInsensitive('transient'),
+			caseInsensitive('deprecated'),
+			caseInsensitive('input'),
+			caseInsensitive('localized'),
+			caseInsensitive('travel'),
 			$._config_modifier,
 		),
 
@@ -465,7 +501,7 @@ module.exports = grammar({
 			$.nested_identifier
 		),
 
-		identifier: $ => /[A-Za-z]([A-Za-z0-9]+)?/,
+		identifier: $ => /[A-Za-z_]([A-Za-z0-9_]+)?/,
 
 		array_identifier: $ => prec.right(seq(
 			$._identifier,
@@ -502,6 +538,10 @@ module.exports = grammar({
 		_integer: $ => token(/\d+/),
 
 		number: $ => {
+			const hex_literal = seq(
+				choice('0x', '0X'),
+				/[\da-fA-F](_?[\da-fA-F])*/,
+			);
 			const decimal_digits = /\d+/;
 			const signed_integer = seq(optional(choice('-', '+')), decimal_digits);
 			const exponent_part = seq(choice('e', 'E'), signed_integer);
@@ -515,7 +555,11 @@ module.exports = grammar({
 				seq(decimal_integer_literal, exponent_part),
 				seq(decimal_digits),
 			);
-			return token(prec.left(choice(decimal_literal, signed_integer)));
+			return token(prec.left(choice(
+				hex_literal,
+				decimal_literal,
+				signed_integer
+			)));
 		},
 
 		member_expression: $ => prec('member', seq(
