@@ -341,6 +341,58 @@ until (i >= 10);
       right: (number))))
 
 ===============================================================================
+Switch statement
+===============================================================================
+
+switch (reasonCode) {
+	case 0x00:
+		log("OK");
+		return;
+	case 0x80:
+		warn("Error");
+		break;
+	default:
+		warn("Nope");
+		break;
+}
+
+---
+
+(program
+  (switch_statement
+    condition: (identifier)
+    rules: (switch_body
+      (switch_rule
+        (switch_condition
+          (number))
+        (expression_statement
+          (call_expression
+            function: (identifier)
+            arguments: (arguments
+              (string
+                (string_fragment)))))
+        (return_statement))
+      (switch_rule
+        (switch_condition
+          (number))
+        (expression_statement
+          (call_expression
+            function: (identifier)
+            arguments: (arguments
+              (string
+                (string_fragment)))))
+        (break_statement))
+      (switch_rule
+        (switch_condition)
+        (expression_statement
+          (call_expression
+            function: (identifier)
+            arguments: (arguments
+              (string
+                (string_fragment)))))
+        (break_statement)))))
+
+===============================================================================
 Assert statement
 ===============================================================================
 

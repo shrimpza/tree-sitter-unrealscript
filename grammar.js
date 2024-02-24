@@ -210,6 +210,28 @@ module.exports = grammar({
 			';',
 		),
 
+		switch_statement: $ => seq(
+			caseInsensitive('switch'),
+			'(', field('condition', $.expression), ')',
+			field('rules', $.switch_body),
+		),
+		switch_body: $ => seq(
+			'{',
+				repeat($.switch_rule),
+			'}',
+		),
+		switch_rule: $ => prec.left(seq(
+			$.switch_condition,
+			repeat($.statement),
+		)),
+		switch_condition: $ => seq(
+			choice(
+				seq(caseInsensitive('case'), $.expression),
+				caseInsensitive('default'),
+			),
+			':',
+		),
+
 		return_statement: $ => seq(
 			caseInsensitive('return'),
 			optional($.expression),
@@ -276,7 +298,7 @@ module.exports = grammar({
 		_class_variable_declaration: $ => seq(
 			caseInsensitive('var'),
 			field('editgroups', optional(seq('(', commaSep($._identifier), ')'))),
-			optional($.variable_modifier),
+			optional(repeat($.variable_modifier)),
 			field('type', $.type),
 			commaSep1(field('name', $._identifier)),
 		),
@@ -284,7 +306,7 @@ module.exports = grammar({
 		_enum_variable_declaration: $ => seq(
 			caseInsensitive('var'),
 			field('editorgroups', optional(seq('(', commaSep($._identifier), ')'))),
-			optional($.variable_modifier),
+			optional(repeat($.variable_modifier)),
 			$.enum_declaration,
 			commaSep1(field('name', $._identifier)),
 		),
@@ -422,6 +444,7 @@ module.exports = grammar({
 			$.foreach_statement,
 			$.while_statement,
 			$.do_until_statement,
+			$.switch_statement,
 			$.continue_statement,
 			$.break_statement,
 			$.assert_statement,
@@ -462,8 +485,7 @@ module.exports = grammar({
 			$.global,
 			$.number,
 			$.string,
-			$.true,
-			$.false,
+			$.boolean,
 			$.name,
 			$._identifier,
 		),
@@ -621,6 +643,10 @@ module.exports = grammar({
 		true: _ => caseInsensitive('true'),
 		false: _ => caseInsensitive('false'),
 		none: _ => caseInsensitive('none'),
+		boolean: $ => choice(
+			$.true,
+			$.false,
+		),
 
 		string: $ => seq(
 			'"',
