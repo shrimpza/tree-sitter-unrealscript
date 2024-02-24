@@ -134,7 +134,8 @@ var() String MyVariable[20];
       (primitive_type))
     name: (array_identifier
       (identifier)
-      (array_dimensions))))
+      (array_dimensions
+        size: (uint)))))
 
 ===============================================================================
 Configurable variable declaration
@@ -354,3 +355,107 @@ var private enum TheCoolEnum {
         (identifier)))
     name: (identifier)
     name: (identifier)))
+
+===============================================================================
+Struct declaration
+===============================================================================
+
+struct Color {
+	var() config byte R, G, B, A;
+};
+
+---
+
+(program
+  (struct_declaration
+    name: (identifier)
+    body: (struct_body
+      (variable_declaration
+        (variable_modifier)
+        type: (type
+          (primitive_type))
+        name: (identifier)
+        name: (identifier)
+        name: (identifier)
+        name: (identifier)))))
+
+===============================================================================
+Complex struct declaration
+===============================================================================
+
+struct Scale
+{
+	var() config vector Scale;
+	var() config float SheerRate;
+	var() config enum ESheerAxis
+	{
+		SHEER_None,
+		SHEER_XY,
+		// etc
+	} SheerAxis;
+};
+
+---
+
+(program
+  (struct_declaration
+    name: (identifier)
+    body: (struct_body
+      (variable_declaration
+        (variable_modifier)
+        type: (type
+          (native_type))
+        name: (identifier))
+      (variable_declaration
+        (variable_modifier)
+        type: (type
+          (primitive_type))
+        name: (identifier))
+      (variable_declaration
+        (variable_modifier)
+        (enum_declaration
+          name: (identifier)
+          body: (enum_body
+            (identifier)
+            (identifier)
+            (comment)))
+        name: (identifier)))))
+
+===============================================================================
+Operator declaration
+===============================================================================
+
+native static final operator(24) bool something ( Object A, Object B );
+
+private postoperator int ++- (out int A);
+
+---
+
+(program
+  (operator_declaration
+    (function_modifier)
+    (function_modifier)
+    (function_modifier)
+    precedence: (uint)
+    return_type: (type
+      (primitive_type))
+    operator: (operator_name
+      (identifier))
+    parameters: (function_parameters
+      type: (type
+        (identifier))
+      name: (identifier)
+      type: (type
+        (identifier))
+      name: (identifier)))
+
+  (operator_declaration
+    (function_modifier)
+    return_type: (type
+      (primitive_type))
+    operator: (operator_name)
+    parameters: (function_parameters
+      (parameter_modifier)
+      type: (type
+        (primitive_type))
+      name: (identifier))))

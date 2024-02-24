@@ -89,8 +89,10 @@ module.exports = grammar({
 		declaration: $ => choice(
 			$.class_declaration,
 			$.function_declaration,
+			$.operator_declaration,
 			$.variable_declaration,
-			$.enum_declaration
+			$.enum_declaration,
+			$.struct_declaration,
 		),
 
 		class_declaration: $ => seq(
@@ -110,11 +112,28 @@ module.exports = grammar({
 			choice(field('body', $.block), ';'),
 		),
 
+		operator_declaration: $ => seq(
+			repeat($.function_modifier),
+			choice(
+				seq(caseInsensitive('operator'), '(', optional(field('precedence', $.uint)),')',),
+				caseInsensitive('preoperator'),
+				caseInsensitive('postoperator'),
+			),
+			field('return_type', optional($.type)),
+			field('operator', $.operator_name),
+			field('parameters', $.function_parameters),
+			choice(field('body', $.block), ';'),
+		),
+		operator_name: $ => choice(
+			$.identifier,
+			/[\^!$%&/?*+~@\-><|]+/,
+		),
+
 		if_statement: $ => prec.right(seq(
-			'if',
+			caseInsensitive('if'),
 			field('condition', $.condition),
 			field('consequence', $.statement),
-			optional(seq('else', field('alternative', $.statement))),
+			optional(seq(caseInsensitive('else'), field('alternative', $.statement))),
 		)),
 
 		condition: $ => seq('(', $.expression, ')'),
@@ -170,13 +189,29 @@ module.exports = grammar({
 		enum_declaration: $ => seq(
 			caseInsensitive('enum'),
 			field('name', $.identifier),
-			field('body', $.enum_body)
+			field('body', $.enum_body),
 		),
 		enum_body: $ => seq(
 			'{',
 			commaSep1($.identifier),
 			optional(','),
-			'}'
+			'}',
+		),
+
+		struct_declaration: $ => seq(
+			caseInsensitive('struct'),
+			field('name', $.identifier),
+			optional(seq(
+				caseInsensitive('extends'),
+				field('parent', $.identifier),
+			)),
+			field('body', $.struct_body),
+			';',
+		),
+		struct_body: $ => seq(
+			'{',
+			repeat($.variable_declaration),
+			'}',
 		),
 
 		variable_declaration: $ => seq(
@@ -200,7 +235,7 @@ module.exports = grammar({
 			field('editorgroups', optional(seq('(', commaSep($._identifier), ')'))),
 			optional($.variable_modifier),
 			$.enum_declaration,
-			commaSep1(field('name', $._identifier))
+			commaSep1(field('name', $._identifier)),
 		),
 
 		local_variable_declaration: $ => seq(
@@ -509,7 +544,7 @@ module.exports = grammar({
 		)),
 
 		array_dimensions: $ => prec.right(repeat1(
-			seq('[', field('size', choice($.identifier, $._integer)), ']')
+			seq('[', field('size', choice($.identifier, $.uint)), ']')
 		)),
 
 		self: _ => caseInsensitive('self'),
@@ -535,7 +570,7 @@ module.exports = grammar({
 			'\'',
 		),
 
-		_integer: $ => token(/\d+/),
+		uint: $ => token(/\d+/),
 
 		number: $ => {
 			const hex_literal = seq(
