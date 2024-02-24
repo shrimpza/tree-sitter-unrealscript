@@ -2517,6 +2517,14 @@
         },
         {
           "type": "SYMBOL",
+          "name": "default"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "global"
+        },
+        {
+          "type": "SYMBOL",
           "name": "number"
         },
         {
@@ -3660,9 +3668,43 @@
         },
         {
           "type": "SYMBOL",
+          "name": "dynamic_array"
+        },
+        {
+          "type": "SYMBOL",
           "name": "identifier"
         }
       ]
+    },
+    "dynamic_array": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[aA][rR][rR][aA][yY]"
+            },
+            "named": false,
+            "value": "array"
+          },
+          {
+            "type": "STRING",
+            "value": "<"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "type"
+          },
+          {
+            "type": "STRING",
+            "value": ">"
+          }
+        ]
+      }
     },
     "primitive_type": {
       "type": "CHOICE",
@@ -3837,6 +3879,24 @@
       },
       "named": false,
       "value": "super"
+    },
+    "global": {
+      "type": "ALIAS",
+      "content": {
+        "type": "PATTERN",
+        "value": "[gG][lL][oO][bB][aA][lL]"
+      },
+      "named": false,
+      "value": "global"
+    },
+    "default": {
+      "type": "ALIAS",
+      "content": {
+        "type": "PATTERN",
+        "value": "[dD][eE][fF][aA][uU][lL][tT]"
+      },
+      "named": false,
+      "value": "default"
     },
     "true": {
       "type": "ALIAS",

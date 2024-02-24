@@ -449,6 +449,8 @@ module.exports = grammar({
 			$.parenthesized_expression,
 			$.self,
 			$.super,
+			$.default,
+			$.global,
 			$.number,
 			$.string,
 			$.true,
@@ -557,8 +559,14 @@ module.exports = grammar({
 		type: $ => choice(
 			$.primitive_type,
 			$.native_type,
+			$.dynamic_array,
 			$.identifier,
 		),
+
+		dynamic_array: $ => prec.right(seq(
+			caseInsensitive('array'),
+			'<', $.type, '>',
+		)),
 
 		primitive_type: $ => choice(
 			caseInsensitive('bool'),
@@ -594,6 +602,8 @@ module.exports = grammar({
 
 		self: _ => caseInsensitive('self'),
 		super: _ => caseInsensitive('super'),
+		global: _ => caseInsensitive('global'),
+		default: _ => caseInsensitive('default'),
 		true: _ => caseInsensitive('true'),
 		false: _ => caseInsensitive('false'),
 		none: _ => caseInsensitive('none'),

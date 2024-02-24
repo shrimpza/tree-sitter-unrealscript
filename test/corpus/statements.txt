@@ -138,6 +138,22 @@ var() String MyVariable[20];
         size: (uint)))))
 
 ===============================================================================
+Dynamic array variable declaration
+===============================================================================
+
+var Array<String> ResizeableBar;
+
+---
+
+(program
+  (variable_declaration
+    type: (type
+      (dynamic_array
+        (type
+          (primitive_type))))
+    name: (identifier)))
+
+===============================================================================
 Configurable variable declaration
 ===============================================================================
 
