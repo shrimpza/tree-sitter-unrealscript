@@ -8,6 +8,10 @@
         "named": true
       },
       {
+        "type": "defaultproperties",
+        "named": true
+      },
+      {
         "type": "enum_declaration",
         "named": true
       },
@@ -17,6 +21,10 @@
       },
       {
         "type": "operator_declaration",
+        "named": true
+      },
+      {
+        "type": "replication_block",
         "named": true
       },
       {
@@ -105,6 +113,10 @@
       },
       {
         "type": "parenthesized_expression",
+        "named": true
+      },
+      {
+        "type": "reference",
         "named": true
       },
       {
@@ -245,6 +257,10 @@
         {
           "type": "none",
           "named": true
+        },
+        {
+          "type": "reference",
+          "named": true
         }
       ]
     }
@@ -295,6 +311,10 @@
           },
           {
             "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "reference",
             "named": true
           },
           {
@@ -653,6 +673,77 @@
     "fields": {}
   },
   {
+    "type": "default_property_assignment",
+    "named": true,
+    "fields": {
+      "index": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "uint",
+            "named": true
+          }
+        ]
+      },
+      "property": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "primary_expression",
+            "named": true
+          },
+          {
+            "type": "struct_value",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "defaultproperties",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "default_property_assignment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "do_until_statement",
     "named": true,
     "fields": {
@@ -941,6 +1032,10 @@
           {
             "type": "none",
             "named": true
+          },
+          {
+            "type": "reference",
+            "named": true
           }
         ]
       },
@@ -1008,6 +1103,10 @@
         },
         {
           "type": "none",
+          "named": true
+        },
+        {
+          "type": "reference",
           "named": true
         }
       ]
@@ -1205,6 +1304,69 @@
     }
   },
   {
+    "type": "reference",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "replication_block",
+    "named": true,
+    "fields": {
+      "condition": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "condition",
+            "named": true
+          }
+        ]
+      },
+      "consequence": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "kind": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "reliable",
+            "named": false
+          },
+          {
+            "type": "unreliable",
+            "named": false
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "return_statement",
     "named": true,
     "fields": {},
@@ -1328,6 +1490,32 @@
         "types": [
           {
             "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "struct_value",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "right": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "primary_expression",
             "named": true
           }
         ]
@@ -1496,6 +1684,10 @@
           {
             "type": "none",
             "named": true
+          },
+          {
+            "type": "reference",
+            "named": true
           }
         ]
       },
@@ -1530,6 +1722,10 @@
           {
             "type": "none",
             "named": true
+          },
+          {
+            "type": "reference",
+            "named": true
           }
         ]
       },
@@ -1551,6 +1747,10 @@
           },
           {
             "type": "none",
+            "named": true
+          },
+          {
+            "type": "reference",
             "named": true
           }
         ]
@@ -1851,6 +2051,10 @@
     "named": false
   },
   {
+    "type": "defaultproperties",
+    "named": false
+  },
+  {
     "type": "dependson",
     "named": false
   },
@@ -2051,6 +2255,14 @@
     "named": false
   },
   {
+    "type": "reliable",
+    "named": false
+  },
+  {
+    "type": "replication",
+    "named": false
+  },
+  {
     "type": "return",
     "named": false
   },
@@ -2117,6 +2329,10 @@
   {
     "type": "uint",
     "named": true
+  },
+  {
+    "type": "unreliable",
+    "named": false
   },
   {
     "type": "until",

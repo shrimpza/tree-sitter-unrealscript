@@ -50,6 +50,7 @@ module.exports = grammar({
 			'concat',
 			$._statement
 		],
+		[$.reference, $.primary_expression],
 		['assign', $.primary_expression],
 		['member', 'new', 'call', $.expression],
 		['declaration', 'literal'],
@@ -58,13 +59,14 @@ module.exports = grammar({
 		// [$.import_statement, $.import],
 		// [$.export_statement, $.primary_expression],
 		// [$.variable_declaration, $.primary_expression],
-		// [$.declaration, $.expression_statement],
+		[$.struct_value, $.expression],
 		[$.number, $.array_identifier, $._identifier],
 		[$.nested_identifier, $.member_expression],
 	],
 
 	conflicts: $ => [
 		[$.primary_expression, $.array_identifier],
+		// [$.expression, $._defaultproperties_properties],
 		// [$.for_statement, $.expression],
 		// [$.primary_expression, $._property_name, $.arrow_function],
 		// [$.primary_expression, $.arrow_function],
@@ -93,6 +95,8 @@ module.exports = grammar({
 			$.variable_declaration,
 			$.enum_declaration,
 			$.struct_declaration,
+			$.replication_block,
+			$.defaultproperties,
 		),
 
 		class_declaration: $ => seq(
@@ -137,6 +141,46 @@ module.exports = grammar({
 		)),
 
 		condition: $ => seq('(', $.expression, ')'),
+
+		replication_block: $ => seq(
+			caseInsensitive('replication'),
+			'{',
+			repeat(seq(
+				field('kind', choice(caseInsensitive('unreliable'), caseInsensitive('reliable'))),
+				caseInsensitive('if'),
+				field('condition', $.condition),
+				field('consequence', commaSep1($.identifier)),
+				';',
+			)),
+			'}',
+		),
+
+		defaultproperties: $ => seq(
+			caseInsensitive('defaultproperties'),
+			'{',
+			repeat($._defaultproperties_properties),
+			'}',
+		),
+		_defaultproperties_properties: $ => seq(
+			$.default_property_assignment
+		),
+		default_property_assignment: $ => prec.right('assign', seq(
+			field('property', seq(
+				$.identifier,
+				field('index', optional(seq(choice('(', '['), $.uint, choice(']', ')')))),
+			)),
+			'=',
+			field('value', $._default_property_value),
+		)),
+		_default_property_value: $ => choice(
+			$.primary_expression,
+			$.struct_value,
+		),
+		struct_value: $ => seq(
+			'(',
+				commaSep(seq(field('left', $.identifier),  '=', field('right', $.primary_expression))),
+			')'
+		),
 
 		for_statement: $ => seq(
 			caseInsensitive('for'), '(',
@@ -533,7 +577,8 @@ module.exports = grammar({
 			$.none,
 			$.identifier,
 			$.array_identifier,
-			$.nested_identifier
+			$.nested_identifier,
+			$.reference
 		),
 
 		identifier: $ => /[A-Za-z_]([A-Za-z0-9_]+)?/,
@@ -564,10 +609,14 @@ module.exports = grammar({
 		unescaped_double_string_fragment: _ => token.immediate(prec(1, /[^"\\\r\n]+/)),
 		unescaped_single_string_fragment: _ => token.immediate(prec(1, /[^'\\\r\n]+/)),
 		escape_sequence: _ => token.immediate('\\'),
-		name: $ => seq(
+		name: $ => prec.right(seq(
 			'\'',
 			$._identifier,
 			'\'',
+		)),
+		reference: $ => seq(
+			$.identifier,
+			$.name,
 		),
 
 		uint: $ => token(/\d+/),

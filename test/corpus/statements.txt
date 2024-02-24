@@ -448,7 +448,6 @@ private postoperator int ++- (out int A);
       type: (type
         (identifier))
       name: (identifier)))
-
   (operator_declaration
     (function_modifier)
     return_type: (type
@@ -459,3 +458,101 @@ private postoperator int ++- (out int A);
       type: (type
         (primitive_type))
       name: (identifier))))
+
+===============================================================================
+Replication block
+===============================================================================
+
+replication {
+	reliable if( Role==ROLE_Authority && bNetOwner )
+		PlayerViewOffset, PlayerViewMesh, PlayerViewScale;
+	unreliable if( Role==ROLE_Authority )
+		ThirdPersonScale;
+}
+
+---
+
+(program
+  (replication_block
+    condition: (condition
+      (binary_expression
+        left: (binary_expression
+          left: (identifier)
+          right: (identifier))
+        right: (identifier)))
+    consequence: (identifier)
+    consequence: (identifier)
+    consequence: (identifier)
+    condition: (condition
+      (binary_expression
+        left: (identifier)
+        right: (identifier)))
+    consequence: (identifier)))
+
+===============================================================================
+Defaultproperties
+===============================================================================
+
+defaultproperties
+{
+     DrawType=DT_Mesh
+     Texture=Texture'Engine.S_Inventory'
+     AmbientGlow=255
+     Skins[0]=Texture'Engine.Default'
+     Skins[1]=None
+}
+
+---
+
+(program
+  (defaultproperties
+    (default_property_assignment
+      property: (identifier)
+      value: (identifier))
+    (default_property_assignment
+      property: (identifier)
+      value: (reference
+        (identifier)
+        (name
+          (nested_identifier
+            object: (identifier)
+            property: (property_identifier)))))
+    (default_property_assignment
+      property: (identifier)
+      value: (number))
+    (default_property_assignment
+      property: (identifier)
+      index: (uint)
+      value: (reference
+        (identifier)
+        (name
+          (nested_identifier
+            object: (identifier)
+            property: (property_identifier)))))
+    (default_property_assignment
+      property: (identifier)
+      index: (uint)
+      value: (identifier))))
+
+===============================================================================
+Defaultproperties struct initialiser
+===============================================================================
+
+defaultproperties
+{
+     RotationRate=(Yaw=5000,Pitch=9000,Roll=0)
+}
+
+---
+
+(program
+  (defaultproperties
+    (default_property_assignment
+      property: (identifier)
+      value: (struct_value
+        left: (identifier)
+        right: (number)
+        left: (identifier)
+        right: (number)
+        left: (identifier)
+        right: (number)))))
