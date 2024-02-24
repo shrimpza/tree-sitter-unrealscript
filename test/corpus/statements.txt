@@ -274,6 +274,31 @@ for (I = 0; I < Total; I++) {
       (continue_statement))))
 
 ===============================================================================
+ForEach statement
+===============================================================================
+
+foreach AllActors(class'MyThing', found) {
+  outThing = found;
+}
+
+---
+
+(program
+  (foreach_statement
+    iterator: (identifier)
+    arguments: (arguments
+      (reference
+        (identifier)
+        (name
+          (identifier)))
+      (identifier))
+    body: (block
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier))))))
+
+===============================================================================
 While statement
 ===============================================================================
 
@@ -572,3 +597,21 @@ defaultproperties
         right: (number)
         left: (identifier)
         right: (number)))))
+
+===============================================================================
+Function call statement
+===============================================================================
+
+inventory.RecommendWeapon(rating, bUseAltMode);
+
+---
+
+(program
+  (expression_statement
+    (call_expression
+      function: (nested_identifier
+        object: (identifier)
+        property: (property_identifier))
+      arguments: (arguments
+        (identifier)
+        (identifier)))))

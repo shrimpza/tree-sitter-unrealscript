@@ -190,6 +190,13 @@ module.exports = grammar({
 			field('body', $.statement),
 		),
 
+		foreach_statement: $ => seq(
+			caseInsensitive('foreach'),
+			field('iterator', $.identifier),
+			field('arguments', $.arguments),
+			field('body', $.statement),
+		),
+
 		while_statement: $ => seq(
 			caseInsensitive('while'), '(',
 			field('condition', $.expression), ')',
@@ -412,6 +419,7 @@ module.exports = grammar({
 			$.expression_statement,
 			$.if_statement,
 			$.for_statement,
+			$.foreach_statement,
 			$.while_statement,
 			$.do_until_statement,
 			$.continue_statement,
@@ -440,6 +448,7 @@ module.exports = grammar({
 			$.binary_expression,
 			$.update_expression,
 			$.string_expression,
+			$.call_expression,
 			$.new_expression,
 		),
 
@@ -560,11 +569,16 @@ module.exports = grammar({
 			$.primitive_type,
 			$.native_type,
 			$.dynamic_array,
+			$.class,
 			$.identifier,
 		),
 
 		dynamic_array: $ => prec.right(seq(
 			caseInsensitive('array'),
+			'<', $.type, '>',
+		)),
+		class: $ => prec.right(seq(
+			caseInsensitive('class'),
 			'<', $.type, '>',
 		)),
 
@@ -674,6 +688,12 @@ module.exports = grammar({
 			'(',
 			$._expression,
 			')',
+		),
+		call_expression: $ => choice(
+			prec('call', seq(
+				field('function', $.expression),
+				field('arguments', $.arguments),
+			)),
 		),
 
 		comment: _ => choice(

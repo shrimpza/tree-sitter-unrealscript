@@ -59,8 +59,8 @@ lol++;
       right: (update_expression
         argument: (number))))
   (expression_statement
-      (update_expression
-        argument: (identifier))))
+    (update_expression
+      argument: (identifier))))
 
 ===============================================================================
 String operations
@@ -106,6 +106,44 @@ lol *= -2;
       left: (identifier)
       right: (number)))
   (expression_statement
-      (augmented_assignment_expression
-        left: (identifier)
-        right: (number))))
+    (augmented_assignment_expression
+      left: (identifier)
+      right: (number))))
+
+===============================================================================
+Assignment to function result
+===============================================================================
+
+weapon = inventory.RecommendWeapon(rating, bUseAltMode);
+
+---
+
+(program
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (call_expression
+        function: (nested_identifier
+          object: (identifier)
+          property: (property_identifier))
+        arguments: (arguments
+          (identifier)
+          (identifier))))))
+
+===============================================================================
+Assignment to function result property
+===============================================================================
+
+bestWeapon = RecommendWeapons()[0];
+
+---
+
+(program
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (subscript_expression
+        object: (call_expression
+          function: (identifier)
+          arguments: (arguments))
+        index: (number)))))
