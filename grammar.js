@@ -16,12 +16,9 @@ module.exports = grammar({
 		$.declaration,
 		$.expression,
 		$.primary_expression,
-		// $.pattern,
 	],
 
 	inline: $ => [
-		// $._call_signature,
-		// $._formal_parameter,
 		$.statement,
 		$._expressions,
 		$._identifier,
@@ -46,8 +43,8 @@ module.exports = grammar({
 			'bitwise_or',
 			'logical_and',
 			'logical_or',
-			'concat_spaces',
 			'concat',
+			'vector_operation',
 			$._statement
 		],
 		[$.reference, $.primary_expression],
@@ -55,34 +52,14 @@ module.exports = grammar({
 		['member', 'new', 'call', $.expression],
 		['declaration', 'literal'],
 		[$.primary_expression, $.block],
-		// [$.return_statement, $.expression_statement],
-		// [$.import_statement, $.import],
-		// [$.export_statement, $.primary_expression],
-		// [$.variable_declaration, $.primary_expression],
 		[$.struct_value, $.expression],
 		[$.number, $.array_identifier, $._identifier],
-		[$.nested_identifier, $.member_expression],
+		[$.primary_expression, $.nested_identifier, $.member_expression],
 	],
 
 	conflicts: $ => [
 		[$.primary_expression, $.array_identifier],
 		[$.state_modifier, $.function_modifier],
-		[$.nested_identifier],
-		// [$.expression, $._defaultproperties_properties],
-		// [$.for_statement, $.expression],
-		// [$.primary_expression, $._property_name, $.arrow_function],
-		// [$.primary_expression, $.arrow_function],
-		// [$.primary_expression, $.method_definition],
-		// [$.primary_expression, $.rest_pattern],
-		// [$.primary_expression, $.pattern],
-		// [$.primary_expression, $._for_header],
-		// [$.array, $.array_pattern],
-		// [$.object, $.object_pattern],
-		// [$.assignment_expression, $.pattern],
-		// [$.assignment_expression, $.object_assignment_pattern],
-		// [$.labeled_statement, $._property_name],
-		// [$.computed_property_name, $.array],
-		// [$.binary_expression, $._initializer],
 	],
 
 	word: $ => $.identifier,
@@ -193,7 +170,8 @@ module.exports = grammar({
 			'}',
 		),
 		_defaultproperties_properties: $ => seq(
-			$.default_property_assignment
+			$.default_property_assignment,
+			'\n',
 		),
 		default_property_assignment: $ => prec.right('assign', seq(
 			field('property', seq(
@@ -430,7 +408,8 @@ module.exports = grammar({
 			caseInsensitive('travel'),
 			caseInsensitive('native'),
 			caseInsensitive('export'),
-			caseInsensitive('noexportS'),
+			caseInsensitive('noexport'),
+			caseInsensitive('globalconfig'),
 			$._config_modifier,
 		),
 
@@ -596,8 +575,11 @@ module.exports = grammar({
 				['<=', 'binary_relation'],
 				['==', 'binary_equality'],
 				['!=', 'binary_equality'],
+				['~=', 'binary_equality'],
 				['>=', 'binary_relation'],
 				['>', 'binary_relation'],
+				[caseInsensitive('dot'), 'vector_operation'],
+				[caseInsensitive('cross'), 'vector_operation'],
 			].map(([operator, precedence, associativity]) =>
 				(associativity === 'right' ? prec.right : prec.left)(precedence, seq(
 					field('left', $.expression),
@@ -632,7 +614,7 @@ module.exports = grammar({
 
 		string_expression: $ => choice(
 			...[
-				['@', 'concat_spaces'],
+				['@', 'concat'],
 				['$', 'concat'],
 			].map(([operator, precedence]) =>
 				prec.left(precedence, seq(
@@ -755,12 +737,12 @@ module.exports = grammar({
 		},
 
 		member_expression: $ => prec('member', seq(
-			field('object', choice($.identifier)),
+			field('object', choice($.expression, $.primary_expression)),
 			'.',
 			field('property', alias($.identifier, $.property_identifier)),
 		)),
 		nested_identifier: $ => prec('member', seq(
-			field('object', choice($._identifier, alias($.nested_identifier, $.member_expression))),
+			field('object', choice($._identifier)),
 			'.',
 			field('property', alias($.identifier, $.property_identifier)),
 		)),

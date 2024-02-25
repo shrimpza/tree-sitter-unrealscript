@@ -566,11 +566,23 @@
             "named": false
           },
           {
+            "type": "cross",
+            "named": false
+          },
+          {
+            "type": "dot",
+            "named": false
+          },
+          {
             "type": "|",
             "named": false
           },
           {
             "type": "||",
+            "named": false
+          },
+          {
+            "type": "~=",
             "named": false
           }
         ]
@@ -1275,35 +1287,7 @@
         "required": true,
         "types": [
           {
-            "type": "array_identifier",
-            "named": true
-          },
-          {
-            "type": "default",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "member_expression",
-            "named": true
-          },
-          {
-            "type": "nested_identifier",
-            "named": true
-          },
-          {
-            "type": "reference",
-            "named": true
-          },
-          {
-            "type": "self",
-            "named": true
-          },
-          {
-            "type": "super",
+            "type": "expression",
             "named": true
           }
         ]
@@ -1382,10 +1366,6 @@
           },
           {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "member_expression",
             "named": true
           },
           {
@@ -2552,6 +2532,10 @@
     "named": false
   },
   {
+    "type": "cross",
+    "named": false
+  },
+  {
     "type": "default",
     "named": false
   },
@@ -2573,6 +2557,10 @@
   },
   {
     "type": "dontcollapsecategories",
+    "named": false
+  },
+  {
+    "type": "dot",
     "named": false
   },
   {
@@ -2648,6 +2636,10 @@
     "named": false
   },
   {
+    "type": "globalconfig",
+    "named": false
+  },
+  {
     "type": "hidecategories",
     "named": false
   },
@@ -2709,10 +2701,6 @@
   },
   {
     "type": "noexport",
-    "named": false
-  },
-  {
-    "type": "noexportS",
     "named": false
   },
   {
@@ -2917,6 +2905,10 @@
   },
   {
     "type": "~",
+    "named": false
+  },
+  {
+    "type": "~=",
     "named": false
   }
 ]

@@ -270,12 +270,12 @@ event Timer() {
       (comment)
       (expression_statement
         (assignment_expression
-          left: (nested_identifier
-            object: (nested_identifier
+          left: (member_expression
+            object: (member_expression
               object: (identifier)
               property: (property_identifier))
             property: (property_identifier))
-          right: (nested_identifier
+          right: (member_expression
             object: (identifier)
             property: (property_identifier))))
       (return_statement))))
@@ -708,6 +708,42 @@ defaultproperties
         right: (number)))))
 
 ===============================================================================
+Defaultproperties references
+===============================================================================
+
+defaultproperties
+{
+	 StatLogClass=class'UTStatLogFile'
+	 EndStatsClass=class'EndStats'
+	 Wat=Texture'Thing.WTF'
+}
+
+---
+
+(program
+  (defaultproperties
+    (default_property_assignment
+      (identifier)
+      (reference
+        (identifier)
+        (name
+          (identifier))))
+    (default_property_assignment
+      (identifier)
+      (reference
+        (identifier)
+        (name
+          (identifier))))
+    (default_property_assignment
+      (identifier)
+      (reference
+        (identifier)
+        (name
+          (nested_identifier
+            (identifier)
+            (property_identifier)))))))
+
+===============================================================================
 Function call statement
 ===============================================================================
 
@@ -718,7 +754,7 @@ inventory.RecommendWeapon(rating, bUseAltMode);
 (program
   (expression_statement
     (call_expression
-      function: (nested_identifier
+      function: (member_expression
         object: (identifier)
         property: (property_identifier))
       arguments: (arguments
