@@ -285,6 +285,10 @@ module.exports = grammar({
 		),
 
 		enum_declaration: $ => seq(
+			$._enum_declaration,
+			';'
+		),
+		_enum_declaration: $ => seq(
 			caseInsensitive('enum'),
 			field('name', $.identifier),
 			field('body', $.enum_body),
@@ -338,7 +342,7 @@ module.exports = grammar({
 			caseInsensitive('var'),
 			field('editorgroups', optional(seq('(', commaSep($._identifier), ')'))),
 			field('modifiers', repeat($.variable_modifier)),
-			$.enum_declaration,
+			$._enum_declaration,
 			commaSep1(field('name', $._identifier)),
 		),
 
@@ -425,6 +429,8 @@ module.exports = grammar({
 			caseInsensitive('localized'),
 			caseInsensitive('travel'),
 			caseInsensitive('native'),
+			caseInsensitive('export'),
+			caseInsensitive('noexportS'),
 			$._config_modifier,
 		),
 
@@ -647,7 +653,7 @@ module.exports = grammar({
 
 		dynamic_array: $ => prec.right(seq(
 			caseInsensitive('array'),
-			'<', $.type, '>',
+			'<', $.type, optional(seq(',', $.uint)), '>',
 		)),
 		class: $ => prec.right(seq(
 			caseInsensitive('class'),
@@ -730,13 +736,13 @@ module.exports = grammar({
 			);
 			const decimal_digits = /\d+/;
 			const signed_integer = seq(optional(choice('-', '+')), decimal_digits);
-			const exponent_part = seq(choice('e', 'E'), signed_integer);
+			const exponent_part = seq(choice('e', 'E'));
 			const decimal_integer_literal = choice(
 				'0',
-				seq(optional('0'), /[1-9]/, optional(seq(optional('_'), decimal_digits))),
+				seq(decimal_digits, optional(seq(optional('_'), decimal_digits))),
 			);
 			const decimal_literal = choice(
-				seq(decimal_integer_literal, '.', optional(decimal_digits), optional(exponent_part)),
+				seq(optional(choice('-', '+')), decimal_integer_literal, '.', optional(decimal_digits), optional(exponent_part)),
 				seq('.', decimal_digits, optional(exponent_part)),
 				seq(decimal_integer_literal, exponent_part),
 				seq(decimal_digits),

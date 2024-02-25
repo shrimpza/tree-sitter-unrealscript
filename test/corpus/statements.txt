@@ -475,7 +475,7 @@ Enum declaration
 enum TheCoolEnum {
 	COOL_Foo,
 	COOL_Bar,
-}
+};
 
 ---
 
@@ -500,11 +500,10 @@ var private enum TheCoolEnum {
 (program
   (variable_declaration
     modifiers: (variable_modifier)
-    (enum_declaration
-      name: (identifier)
-      body: (enum_body
-        (identifier)
-        (identifier)))
+    name: (identifier)
+    body: (enum_body
+      (identifier)
+      (identifier))
     name: (identifier)
     name: (identifier)))
 
@@ -565,12 +564,11 @@ struct Scale
         name: (identifier))
       (variable_declaration
         modifiers: (variable_modifier)
-        (enum_declaration
-          name: (identifier)
-          body: (enum_body
-            (identifier)
-            (identifier)
-            (comment)))
+        name: (identifier)
+        body: (enum_body
+          (identifier)
+          (identifier)
+          (comment))
         name: (identifier)))))
 
 ===============================================================================

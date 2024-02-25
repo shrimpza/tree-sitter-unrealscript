@@ -869,11 +869,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "type",
+          "named": true
+        },
+        {
+          "type": "uint",
           "named": true
         }
       ]
@@ -2100,6 +2104,16 @@
     "type": "variable_declaration",
     "named": true,
     "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "enum_body",
+            "named": true
+          }
+        ]
+      },
       "editgroups": {
         "multiple": true,
         "required": false,
@@ -2246,16 +2260,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "enum_declaration",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -2604,6 +2608,10 @@
     "named": false
   },
   {
+    "type": "export",
+    "named": false
+  },
+  {
     "type": "exportstructs",
     "named": false
   },
@@ -2701,6 +2709,10 @@
   },
   {
     "type": "noexport",
+    "named": false
+  },
+  {
+    "type": "noexportS",
     "named": false
   },
   {
