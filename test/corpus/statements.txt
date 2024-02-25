@@ -9,8 +9,7 @@ class MyClass extends ParentClass;
 (program
   (class_declaration
     name: (identifier)
-    (class_heritage
-      parent: (identifier))))
+    parent: (identifier)))
 
 ===============================================================================
 Class modifier declaration
@@ -26,18 +25,61 @@ class ComplexClass extends Actor
 (program
   (class_declaration
     name: (identifier)
-    (class_heritage
-      parent: (identifier))
-    (class_modifier
+    parent: (identifier)
+    modifiers: (class_modifier
       (identifier))
-    (class_modifier)
-    (class_modifier
+    modifiers: (class_modifier)
+    modifiers: (class_modifier
       (identifier)
       (identifier))))
 
-====
-return
-====
+===============================================================================
+State declaration
+===============================================================================
+
+auto state() Test extends Scenario {
+  ignores Stuff, things;
+
+  function BeginState() {
+  	GoToState('Another');
+  }
+
+  Begin:
+  	log("The state started");
+}
+
+---
+
+(program
+  (state_declaration
+    modifiers: (state_modifier)
+    name: (identifier)
+    parent: (identifier)
+    body: (state_body
+      ignores: (identifier)
+      ignores: (identifier)
+      (function_declaration
+        name: (identifier)
+        parameters: (function_parameters)
+        body: (block
+          (expression_statement
+            (call_expression
+              function: (identifier)
+              arguments: (arguments
+                (name
+                  (identifier)))))))
+      (label
+        (identifier))
+      (expression_statement
+        (call_expression
+          function: (identifier)
+          arguments: (arguments
+            (string
+              (string_fragment))))))))
+
+===============================================================================
+Simple return
+===============================================================================
 
 return 123;
 
@@ -77,8 +119,8 @@ private simulated function Tick(Float delta) {}
 
 (program
   (function_declaration
-    (function_modifier)
-    (function_modifier)
+    modifiers: (function_modifier)
+    modifiers: (function_modifier)
     name: (identifier)
     parameters: (function_parameters
       type: (type
@@ -440,7 +482,7 @@ var private enum TheCoolEnum {
 
 (program
   (variable_declaration
-    (variable_modifier)
+    modifiers: (variable_modifier)
     (enum_declaration
       name: (identifier)
       body: (enum_body
@@ -464,7 +506,7 @@ struct Color {
     name: (identifier)
     body: (struct_body
       (variable_declaration
-        (variable_modifier)
+        modifiers: (variable_modifier)
         type: (type
           (primitive_type))
         name: (identifier)
@@ -495,17 +537,17 @@ struct Scale
     name: (identifier)
     body: (struct_body
       (variable_declaration
-        (variable_modifier)
+        modifiers: (variable_modifier)
         type: (type
           (native_type))
         name: (identifier))
       (variable_declaration
-        (variable_modifier)
+        modifiers: (variable_modifier)
         type: (type
           (primitive_type))
         name: (identifier))
       (variable_declaration
-        (variable_modifier)
+        modifiers: (variable_modifier)
         (enum_declaration
           name: (identifier)
           body: (enum_body
@@ -526,9 +568,9 @@ private postoperator int ++- (out int A);
 
 (program
   (operator_declaration
-    (function_modifier)
-    (function_modifier)
-    (function_modifier)
+    modifiers: (function_modifier)
+    modifiers: (function_modifier)
+    modifiers: (function_modifier)
     precedence: (uint)
     return_type: (type
       (primitive_type))
@@ -542,7 +584,7 @@ private postoperator int ++- (out int A);
         (identifier))
       name: (identifier)))
   (operator_declaration
-    (function_modifier)
+    modifiers: (function_modifier)
     return_type: (type
       (primitive_type))
     operator: (operator_name)

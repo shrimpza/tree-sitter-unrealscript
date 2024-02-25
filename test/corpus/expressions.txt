@@ -166,3 +166,20 @@ bestWeapon = RecommendWeapons[0].theBest;
           (array_dimensions
             size: (uint)))
         property: (property_identifier)))))
+
+===============================================================================
+Return with expression
+===============================================================================
+
+return (otherObject.sum % 10);
+
+---
+
+(program
+  (return_statement
+    (parenthesized_expression
+      (binary_expression
+        (nested_identifier
+          (identifier)
+          (property_identifier))
+        (number)))))
