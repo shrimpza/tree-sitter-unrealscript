@@ -212,7 +212,7 @@ event Timer() {
       (expression_statement
         (assignment_expression
           left: (nested_identifier
-            object: (member_expression
+            object: (nested_identifier
               object: (identifier)
               property: (property_identifier))
             property: (property_identifier))

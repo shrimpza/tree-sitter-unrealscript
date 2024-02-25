@@ -271,10 +271,6 @@
           "named": true
         },
         {
-          "type": "none",
-          "named": true
-        },
-        {
           "type": "reference",
           "named": true
         }
@@ -319,10 +315,6 @@
           },
           {
             "type": "nested_identifier",
-            "named": true
-          },
-          {
-            "type": "none",
             "named": true
           },
           {
@@ -1167,10 +1159,6 @@
             "named": true
           },
           {
-            "type": "none",
-            "named": true
-          },
-          {
             "type": "reference",
             "named": true
           }
@@ -1197,11 +1185,23 @@
         "required": true,
         "types": [
           {
+            "type": "array_identifier",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
           {
             "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "nested_identifier",
+            "named": true
+          },
+          {
+            "type": "reference",
             "named": true
           }
         ]
@@ -1239,10 +1239,6 @@
           "named": true
         },
         {
-          "type": "none",
-          "named": true
-        },
-        {
           "type": "reference",
           "named": true
         }
@@ -1263,11 +1259,23 @@
         "required": true,
         "types": [
           {
+            "type": "array_identifier",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
           {
             "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "nested_identifier",
+            "named": true
+          },
+          {
+            "type": "reference",
             "named": true
           }
         ]
@@ -1902,10 +1910,6 @@
             "named": true
           },
           {
-            "type": "none",
-            "named": true
-          },
-          {
             "type": "reference",
             "named": true
           }
@@ -1940,10 +1944,6 @@
             "named": true
           },
           {
-            "type": "none",
-            "named": true
-          },
-          {
             "type": "reference",
             "named": true
           }
@@ -1963,10 +1963,6 @@
           },
           {
             "type": "nested_identifier",
-            "named": true
-          },
-          {
-            "type": "none",
             "named": true
           },
           {

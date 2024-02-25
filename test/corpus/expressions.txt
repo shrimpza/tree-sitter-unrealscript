@@ -147,3 +147,22 @@ bestWeapon = RecommendWeapons()[0];
           function: (identifier)
           arguments: (arguments))
         index: (number)))))
+
+===============================================================================
+Assignment to object in array property
+===============================================================================
+
+bestWeapon = RecommendWeapons[0].theBest;
+
+---
+
+(program
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (nested_identifier
+        object: (array_identifier
+          (identifier)
+          (array_dimensions
+            size: (uint)))
+        property: (property_identifier)))))

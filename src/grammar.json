@@ -2716,6 +2716,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "none"
+        },
+        {
+          "type": "SYMBOL",
           "name": "_identifier"
         }
       ]
@@ -3989,10 +3993,6 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "none"
-        },
-        {
-          "type": "SYMBOL",
           "name": "identifier"
         },
         {
@@ -4695,7 +4695,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "identifier"
+                  "name": "_identifier"
                 },
                 {
                   "type": "ALIAS",
@@ -4876,6 +4876,9 @@
     [
       "primary_expression",
       "array_identifier"
+    ],
+    [
+      "nested_identifier"
     ]
   ],
   "precedences": [

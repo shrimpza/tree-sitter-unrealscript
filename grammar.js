@@ -66,6 +66,7 @@ module.exports = grammar({
 
 	conflicts: $ => [
 		[$.primary_expression, $.array_identifier],
+		[$.nested_identifier],
 		// [$.expression, $._defaultproperties_properties],
 		// [$.for_statement, $.expression],
 		// [$.primary_expression, $._property_name, $.arrow_function],
@@ -238,12 +239,12 @@ module.exports = grammar({
 			';'
 		),
 
-		continue_statement: $ => seq(
+		continue_statement: _ => seq(
 			caseInsensitive('continue'),
 			';'
 		),
 
-		break_statement: $ => seq(
+		break_statement: _ => seq(
 			caseInsensitive('break'),
 			';'
 		),
@@ -387,7 +388,7 @@ module.exports = grammar({
 			$._config_modifier,
 		),
 
-		function_modifier: $ => choice(
+		function_modifier: _ => choice(
 			caseInsensitive('static'),
 			caseInsensitive('private'),
 			caseInsensitive('protected'),
@@ -400,7 +401,7 @@ module.exports = grammar({
 			caseInsensitive('exec'),
 		),
 
-		parameter_modifier: $ => choice(
+		parameter_modifier: _ => choice(
 			caseInsensitive('out'),
 			caseInsensitive('optional'),
 			caseInsensitive('coerce'),
@@ -487,6 +488,7 @@ module.exports = grammar({
 			$.string,
 			$.boolean,
 			$.name,
+			$.none,
 			$._identifier,
 		),
 
@@ -604,7 +606,7 @@ module.exports = grammar({
 			'<', $.type, '>',
 		)),
 
-		primitive_type: $ => choice(
+		primitive_type: _ => choice(
 			caseInsensitive('bool'),
 			caseInsensitive('byte'),
 			caseInsensitive('int'),
@@ -612,20 +614,19 @@ module.exports = grammar({
 			caseInsensitive('string'),
 		),
 
-		native_type: $ => choice(
+		native_type: _$ => choice(
 			caseInsensitive('vector'),
 			caseInsensitive('rotator'),
 		),
 
 		_identifier: $ => choice(
-			$.none,
 			$.identifier,
 			$.array_identifier,
 			$.nested_identifier,
 			$.reference
 		),
 
-		identifier: $ => /[A-Za-z_]([A-Za-z0-9_]+)?/,
+		identifier: _ => /[A-Za-z_]([A-Za-z0-9_]+)?/,
 
 		array_identifier: $ => prec.right(seq(
 			$._identifier,
@@ -669,9 +670,9 @@ module.exports = grammar({
 			$.name,
 		),
 
-		uint: $ => token(/\d+/),
+		uint: _ => token(/\d+/),
 
-		number: $ => {
+		number: _ => {
 			const hex_literal = seq(
 				choice('0x', '0X'),
 				/[\da-fA-F](_?[\da-fA-F])*/,
@@ -702,7 +703,7 @@ module.exports = grammar({
 			field('property', alias($.identifier, $.property_identifier)),
 		)),
 		nested_identifier: $ => prec('member', seq(
-			field('object', choice($.identifier, alias($.nested_identifier, $.member_expression))),
+			field('object', choice($._identifier, alias($.nested_identifier, $.member_expression))),
 			'.',
 			field('property', alias($.identifier, $.property_identifier)),
 		)),
