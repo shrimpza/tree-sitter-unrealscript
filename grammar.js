@@ -88,7 +88,7 @@ module.exports = grammar({
 	word: $ => $.identifier,
 
 	rules: {
-		program: $ => repeat($.statement),
+		program: $ => repeat(choice($.exec_directive, $.statement)),
 
 		declaration: $ => choice(
 			$.class_declaration,
@@ -96,6 +96,7 @@ module.exports = grammar({
 			$.function_declaration,
 			$.operator_declaration,
 			$.variable_declaration,
+			$.constant_declaration,
 			$.enum_declaration,
 			$.struct_declaration,
 			$.replication_block,
@@ -106,8 +107,16 @@ module.exports = grammar({
 			caseInsensitive('class'),
 			field('name', $.identifier),
 			optional($._declaration_heritage),
-			field('modifiers', commaSep($.class_modifier)),
+			field('modifiers', repeat($.class_modifier)),
 			';',
+		),
+
+		exec_directive: $ => seq(
+			field('directive', token(/#[^\s]+/)),
+			field('kind', $.identifier),
+			field('operation', $.identifier),
+			field('arguments', /[^\n]+/),
+			'\n'
 		),
 
 		state_declaration: $ => seq(
@@ -152,7 +161,7 @@ module.exports = grammar({
 		),
 		operator_name: $ => choice(
 			$.identifier,
-			/[\^!$%&/?*+~@\-><|]+/,
+			/[\^!$%&/?*+~@\-><|=]+/,
 		),
 
 		if_statement: $ => prec.right(seq(
@@ -275,12 +284,6 @@ module.exports = grammar({
 			';'
 		),
 
-		constant_declaration: $ => seq(
-			caseInsensitive('const'),
-			$.assignment_expression,
-			';',
-		),
-
 		enum_declaration: $ => seq(
 			caseInsensitive('enum'),
 			field('name', $.identifier),
@@ -309,6 +312,12 @@ module.exports = grammar({
 			'}',
 		),
 
+		constant_declaration: $ => seq(
+			caseInsensitive('const'),
+			$.assignment_expression,
+			';',
+		),
+
 		variable_declaration: $ => seq(
 			choice(
 				$._class_variable_declaration,
@@ -317,13 +326,13 @@ module.exports = grammar({
 			';',
 		),
 
-		_class_variable_declaration: $ => seq(
+		_class_variable_declaration: $ => prec.left(seq(
 			caseInsensitive('var'),
 			field('editgroups', optional(seq('(', commaSep($._identifier), ')'))),
 			field('modifiers', repeat($.variable_modifier)),
 			field('type', $.type),
 			commaSep1(field('name', $._identifier)),
-		),
+		)),
 
 		_enum_variable_declaration: $ => seq(
 			caseInsensitive('var'),
@@ -348,6 +357,14 @@ module.exports = grammar({
 				')'
 			)),
 		) ,
+		_native_modifier: $ => seq(
+			caseInsensitive('native'),
+			optional(seq(
+				'(',
+				field('token', optional($.uint)),
+				')'
+			)),
+		),
 
 		_class_depends_modifier: $ => seq(
 			caseInsensitive('dependson'),
@@ -401,11 +418,13 @@ module.exports = grammar({
 			caseInsensitive('public'),
 			caseInsensitive('protected'),
 			caseInsensitive('const'),
+			caseInsensitive('editconst'),
 			caseInsensitive('transient'),
 			caseInsensitive('deprecated'),
 			caseInsensitive('input'),
 			caseInsensitive('localized'),
 			caseInsensitive('travel'),
+			caseInsensitive('native'),
 			$._config_modifier,
 		),
 
@@ -414,17 +433,17 @@ module.exports = grammar({
 			caseInsensitive('simulated'),
 		),
 
-		function_modifier: _ => choice(
+		function_modifier: $ => choice(
 			caseInsensitive('static'),
 			caseInsensitive('private'),
 			caseInsensitive('protected'),
 			caseInsensitive('simulated'),
 			caseInsensitive('singular'),
-			caseInsensitive('native'),
 			caseInsensitive('final'),
 			caseInsensitive('latent'),
 			caseInsensitive('iterator'),
 			caseInsensitive('exec'),
+			$._native_modifier,
 		),
 
 		parameter_modifier: _ => choice(
@@ -479,7 +498,6 @@ module.exports = grammar({
 			$.break_statement,
 			$.assert_statement,
 			$.return_statement,
-			$.constant_declaration,
 			$.label,
 		),
 
@@ -633,7 +651,7 @@ module.exports = grammar({
 		)),
 		class: $ => prec.right(seq(
 			caseInsensitive('class'),
-			'<', $.type, '>',
+			optional(seq('<', $.type, '>')),
 		)),
 
 		primitive_type: _ => choice(
@@ -653,7 +671,10 @@ module.exports = grammar({
 			$.identifier,
 			$.array_identifier,
 			$.nested_identifier,
-			$.reference
+			$.reference,
+			$.default,
+			$.self,
+			$.super,
 		),
 
 		identifier: _ => /[A-Za-z_]([A-Za-z0-9_]+)?/,

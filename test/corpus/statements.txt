@@ -16,8 +16,8 @@ Class modifier declaration
 ===============================================================================
 
 class ComplexClass extends Actor
-	config(MyConfig),
-	native,
+	config(MyConfig)
+	native
 	HideCategories(Display, Lighting);
 
 ---
@@ -158,6 +158,23 @@ var String MyVariable;
 
 (program
   (variable_declaration
+    type: (type
+      (primitive_type))
+    name: (identifier)))
+
+===============================================================================
+Variable const declaration
+===============================================================================
+
+var native private const String NotAConstant;
+
+---
+
+(program
+  (variable_declaration
+    modifiers: (variable_modifier)
+    modifiers: (variable_modifier)
+    modifiers: (variable_modifier)
     type: (type
       (primitive_type))
     name: (identifier)))

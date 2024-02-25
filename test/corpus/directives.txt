@@ -1,0 +1,18 @@
+===============================================================================
+exec directive
+===============================================================================
+
+#exec Texture Import File=Textures\S_Actor.pcx Name=S_Actor Mips=Off Flags=2
+
+var int lol;
+
+---
+
+(program
+  (exec_directive
+    kind: (identifier)
+    operation: (identifier))
+  (variable_declaration
+    type: (type
+      (primitive_type))
+    name: (identifier)))

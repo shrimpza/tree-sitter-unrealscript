@@ -183,3 +183,19 @@ return (otherObject.sum % 10);
           (identifier)
           (property_identifier))
         (number)))))
+
+===============================================================================
+Default assignment
+===============================================================================
+
+AIRating = Default.AIRating;
+
+---
+
+(program
+  (expression_statement
+    (assignment_expression
+      (identifier)
+      (nested_identifier
+        (default)
+        (property_identifier)))))
