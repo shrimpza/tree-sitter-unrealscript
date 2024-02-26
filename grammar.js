@@ -60,6 +60,7 @@ module.exports = grammar({
 	conflicts: $ => [
 		[$.primary_expression, $.array_identifier],
 		[$.state_modifier, $.function_modifier],
+		[$.primary_expression],
 	],
 
 	word: $ => $.identifier,
@@ -505,23 +506,19 @@ module.exports = grammar({
 			$.binary_expression,
 			$.update_expression,
 			$.string_expression,
-			$.call_expression,
 			$.new_expression,
 		),
 
 		primary_expression: $ => choice(
 			$.subscript_expression,
 			$.member_expression,
+			$.call_expression,
 			$.parenthesized_expression,
 			$.self,
 			$.super,
 			$.default,
 			$.global,
-			$.number,
-			$.string,
-			$.boolean,
-			$.name,
-			$.none,
+			$._literal,
 			$._identifier,
 		),
 
@@ -655,7 +652,7 @@ module.exports = grammar({
 			caseInsensitive('rotator'),
 		),
 
-		_identifier: $ => choice(
+		_identifier: $ => prec.right(choice(
 			$.identifier,
 			$.array_identifier,
 			$.nested_identifier,
@@ -663,7 +660,7 @@ module.exports = grammar({
 			$.default,
 			$.self,
 			$.super,
-		),
+		)),
 
 		identifier: _ => /[A-Za-z_]([A-Za-z0-9_]+)?/,
 
@@ -675,6 +672,15 @@ module.exports = grammar({
 		array_dimensions: $ => prec.right(repeat1(
 			seq('[', field('size', choice($.identifier, $.uint)), ']')
 		)),
+
+		_literal: $ => choice(
+			$.true,
+			$.false,
+			$.string,
+			$.number,
+			$.none,
+			$.name
+		),
 
 		self: _ => caseInsensitive('self'),
 		super: _ => caseInsensitive('super'),

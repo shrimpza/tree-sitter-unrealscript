@@ -9,5 +9,17 @@
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.21.0-pre-release-1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shrimpza/tree-sitter-unrealscript.git"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.uc",
+      "file-types": [
+        "uc"
+      ]
+    }
+  ]
 }

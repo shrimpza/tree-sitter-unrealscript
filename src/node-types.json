@@ -62,10 +62,6 @@
         "named": true
       },
       {
-        "type": "call_expression",
-        "named": true
-      },
-      {
         "type": "new_expression",
         "named": true
       },
@@ -96,11 +92,15 @@
         "named": true
       },
       {
-        "type": "boolean",
+        "type": "call_expression",
         "named": true
       },
       {
         "type": "default",
+        "named": true
+      },
+      {
+        "type": "false",
         "named": true
       },
       {
@@ -153,6 +153,10 @@
       },
       {
         "type": "super",
+        "named": true
+      },
+      {
+        "type": "true",
         "named": true
       }
     ]
@@ -613,25 +617,6 @@
         },
         {
           "type": "statement",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "boolean",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "false",
-          "named": true
-        },
-        {
-          "type": "true",
           "named": true
         }
       ]

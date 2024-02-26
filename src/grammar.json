@@ -3003,10 +3003,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "call_expression"
-        },
-        {
-          "type": "SYMBOL",
           "name": "new_expression"
         }
       ]
@@ -3021,6 +3017,10 @@
         {
           "type": "SYMBOL",
           "name": "member_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "call_expression"
         },
         {
           "type": "SYMBOL",
@@ -3044,23 +3044,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "number"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "string"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "boolean"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "name"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "none"
+          "name": "_literal"
         },
         {
           "type": "SYMBOL",
@@ -4476,37 +4460,41 @@
       ]
     },
     "_identifier": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "array_identifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "nested_identifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "reference"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "default"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "self"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "super"
-        }
-      ]
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "array_identifier"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "nested_identifier"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "reference"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "default"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "self"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "super"
+          }
+        ]
+      }
     },
     "identifier": {
       "type": "PATTERN",
@@ -4565,6 +4553,35 @@
           ]
         }
       }
+    },
+    "_literal": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "true"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "false"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "none"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "name"
+        }
+      ]
     },
     "self": {
       "type": "ALIAS",
@@ -5281,6 +5298,9 @@
     [
       "state_modifier",
       "function_modifier"
+    ],
+    [
+      "primary_expression"
     ]
   ],
   "precedences": [
