@@ -8,5 +8,6 @@
   function: (identifier) @name
   arguments: (arguments) @reference.call)
 
-(class_declaration
-  parent: (identifier) @name) @reference.class
+(reference
+	(identifier)
+	(name	(identifier) @name)) @reference.class

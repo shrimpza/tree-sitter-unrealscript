@@ -65,7 +65,7 @@
   "do"
   "else"
   "enum"
-  "event",
+  "event"
   "extends"
   "expands"
   "final"
