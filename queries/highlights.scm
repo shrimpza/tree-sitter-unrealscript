@@ -65,11 +65,13 @@
   "do"
   "else"
   "enum"
+  "event",
   "extends"
   "expands"
   "final"
   "for"
   "foreach"
+  "function"
   "if"
   "ignores"
   "local"
