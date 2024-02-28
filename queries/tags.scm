@@ -8,6 +8,9 @@
   function: (identifier) @name
   arguments: (arguments) @reference.call)
 
+(new_expression
+  type: (reference (name (identifier) @name))) @reference.class
+
 (reference
 	(identifier)
 	(name	(identifier) @name)) @reference.class

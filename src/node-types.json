@@ -1387,24 +1387,44 @@
     "type": "new_expression",
     "named": true,
     "fields": {
-      "arguments": {
+      "outer": {
         "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "arguments",
+            "type": "array_identifier",
+            "named": true
+          },
+          {
+            "type": "default",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "nested_identifier",
+            "named": true
+          },
+          {
+            "type": "reference",
+            "named": true
+          },
+          {
+            "type": "self",
+            "named": true
+          },
+          {
+            "type": "super",
             "named": true
           }
         ]
       },
-      "constructor": {
+      "type": {
         "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "new_expression",
-            "named": true
-          },
           {
             "type": "primary_expression",
             "named": true

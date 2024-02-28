@@ -59,6 +59,7 @@ module.exports = grammar({
 
 	conflicts: $ => [
 		[$.primary_expression, $.array_identifier],
+		[$.primary_expression, $.new_expression],
 		[$.state_modifier, $.function_modifier],
 		[$.primary_expression],
 	],
@@ -548,9 +549,13 @@ module.exports = grammar({
 			field('right', $.expression),
 		)),
 		new_expression: $ => prec.right('new', seq(
-			'new',
-			field('constructor', choice($.primary_expression, $.new_expression)),
-			field('arguments', optional(prec.dynamic(1, $.arguments))),
+			caseInsensitive('new'),
+			optional(seq(
+				'(',
+					field('outer', $._identifier),
+				')'
+			)),
+			field('type', $.primary_expression),
 		)),
 
 		binary_expression: $ => choice(

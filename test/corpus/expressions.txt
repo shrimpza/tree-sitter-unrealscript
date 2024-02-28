@@ -216,3 +216,37 @@ AIRating = Default.AIRating;
       (member_expression
         (default)
         (property_identifier)))))
+
+===============================================================================
+New object creation
+===============================================================================
+
+SubsetList = new class'UBrowserSubsetList';
+SupersetList = new ClassVariable;
+RulesList = new(None) class'UBrowserTypesList';
+
+---
+
+(program
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (new_expression
+        type: (reference
+          (identifier)
+					(name
+						(identifier))))))
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (new_expression
+        type: (identifier))))
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (new_expression
+        outer: (identifier)
+        type: (reference
+          (identifier)
+					(name
+						(identifier)))))))
