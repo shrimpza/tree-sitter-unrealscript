@@ -712,7 +712,7 @@ module.exports = grammar({
 		escape_sequence: _ => token.immediate('\\'),
 		name: $ => prec.right(seq(
 			'\'',
-			$._identifier,
+			optional($._identifier),
 			'\'',
 		)),
 		reference: $ => seq(

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "unrealscript",
+      "camelcase": "UnrealScript",
+      "title": "UnrealScript",
+      "scope": "source.unrealscript",
+      "file-types": [
+        "uc"
+      ],
+      "highlights": "queries/highlights.scm",
+      "tags": "queries/tags.scm",
+      "locals": "queries/locals.scm",
+      "injection-regex": "^unrealscript$",
+      "class-name": "TreeSitterUnrealscript"
+    }
+  ],
+  "metadata": {
+    "version": "0.3.0",
+    "license": "MIT",
+    "description": "Unrealscript grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Kenneth Watson",
+        "email": "shrimp@shrimp.works",
+        "url": "https://shrimp.works"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/shrimpza/tree-sitter-unrealscript",
+      "funding": ""
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "java": false,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}

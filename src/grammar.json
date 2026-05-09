@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "unrealscript",
   "word": "identifier",
   "rules": {
@@ -4738,8 +4739,16 @@
             "value": "'"
           },
           {
-            "type": "SYMBOL",
-            "name": "_identifier"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_identifier"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           },
           {
             "type": "STRING",
@@ -5491,7 +5500,6 @@
   "externals": [],
   "inline": [
     "statement",
-    "ReferenceError",
     "_identifier",
     "_lhs_expression"
   ],
@@ -5500,5 +5508,6 @@
     "declaration",
     "expression",
     "primary_expression"
-  ]
+  ],
+  "reserved": {}
 }

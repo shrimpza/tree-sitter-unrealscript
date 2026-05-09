@@ -722,6 +722,7 @@
   {
     "type": "comment",
     "named": true,
+    "extra": true,
     "fields": {}
   },
   {
@@ -1295,7 +1296,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "array_identifier",
@@ -1547,6 +1548,7 @@
   {
     "type": "program",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,

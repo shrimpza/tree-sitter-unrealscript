@@ -9,6 +9,7 @@ lol = "multiple\nlines";
 bLol=true;
 CollisionRadius=+00022.000000;
 NumberOfFailures=000.000;
+Type = 'Something';
 
 ---
 
@@ -44,7 +45,12 @@ NumberOfFailures=000.000;
   (expression_statement
     (assignment_expression
       left: (identifier)
-      right: (number))))
+      right: (number)))
+  (expression_statement
+    (assignment_expression
+      left: (identifier)
+      right: (name
+        (identifier)))))
 
 ===============================================================================
 Variable assignment

@@ -310,6 +310,27 @@ if (NotThis || That) {
           (identifier))))))
 
 ===============================================================================
+If statement (empty name condition)
+===============================================================================
+
+if (Type == '') {
+	return 'Something';
+}
+
+---
+
+(program
+  (if_statement
+    condition: (condition
+      (binary_expression
+        left: (identifier)
+        right: (name)))
+    consequence: (block
+      (return_statement
+        (name
+          (identifier))))))
+
+===============================================================================
 For statement
 ===============================================================================
 

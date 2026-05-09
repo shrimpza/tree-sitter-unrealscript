@@ -1,25 +1,15 @@
 {
   "name": "tree-sitter-unrealscript",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "main": "bindings/node",
   "author": "Kenneth Watson",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.18.0"
+    "node-addon-api": "^8.2.2",
+    "node-gyp-build": "^4.8.2"
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.21.0-pre-release-1"
+    "tree-sitter-cli": "^0.26.8"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shrimpza/tree-sitter-unrealscript.git"
-  },
-  "tree-sitter": [
-    {
-      "scope": "source.uc",
-      "file-types": [
-        "uc"
-      ]
-    }
-  ]
+  "repository": "https://github.com/shrimpza/tree-sitter-unrealscript"
 }
