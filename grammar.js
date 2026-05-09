@@ -20,7 +20,7 @@ module.exports = grammar({
 
 	inline: $ => [
 		$.statement,
-		$._expressions,
+		$._expression,
 		$._identifier,
 		$._lhs_expression
 	],
@@ -58,7 +58,6 @@ module.exports = grammar({
 	],
 
 	conflicts: $ => [
-		[$.primary_expression, $.array_identifier],
 		[$.primary_expression, $.new_expression],
 		[$.state_modifier, $.function_modifier],
 		[$.primary_expression],
@@ -315,7 +314,7 @@ module.exports = grammar({
 			field('editgroups', optional(seq('(', commaSep($._identifier), ')'))),
 			field('modifiers', repeat($.variable_modifier)),
 			field('type', $.type),
-			commaSep1(field('name', $._identifier)),
+			commaSep1(field('name', choice($._identifier, $.array_identifier))),
 		)),
 
 		_enum_variable_declaration: $ => seq(
@@ -323,13 +322,13 @@ module.exports = grammar({
 			field('editorgroups', optional(seq('(', commaSep($._identifier), ')'))),
 			field('modifiers', repeat($.variable_modifier)),
 			$._enum_declaration,
-			commaSep1(field('name', $._identifier)),
+			commaSep1(field('name', choice($._identifier, $.array_identifier))),
 		),
 
 		local_variable_declaration: $ => seq(
 			caseInsensitive('local'),
 			field('type', $.type),
-			commaSep1(field('name', $._identifier)),
+			commaSep1(field('name', choice($._identifier, $.array_identifier))),
 			';',
 		),
 
@@ -659,7 +658,6 @@ module.exports = grammar({
 
 		_identifier: $ => prec.right(choice(
 			$.identifier,
-			$.array_identifier,
 			$.nested_identifier,
 			$.reference,
 			$.default,
@@ -669,14 +667,14 @@ module.exports = grammar({
 
 		identifier: _ => /[A-Za-z_]([A-Za-z0-9_]+)?/,
 
-		array_identifier: $ => prec.right(seq(
-			$._identifier,
+		array_identifier: $ => seq(
+			$.identifier,
 			$.array_dimensions,
-		)),
+		),
 
-		array_dimensions: $ => prec.right(repeat1(
-			seq('[', field('size', choice($.identifier, $.uint)), ']')
-		)),
+		array_dimensions: $ => repeat1(
+			seq('[', field('size', $._expression), ']')
+		),
 
 		_literal: $ => choice(
 			$.true,
@@ -738,7 +736,7 @@ module.exports = grammar({
 				seq(optional(choice('-', '+')), decimal_integer_literal, '.', optional(decimal_digits), optional(exponent_part)),
 				seq('.', decimal_digits, optional(exponent_part)),
 				seq(decimal_integer_literal, exponent_part),
-				seq(decimal_digits),
+				decimal_digits,
 			);
 			return token(prec.left(choice(
 				hex_literal,

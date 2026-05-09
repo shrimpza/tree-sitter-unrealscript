@@ -194,7 +194,7 @@ var() String MyVariable[20];
     name: (array_identifier
       (identifier)
       (array_dimensions
-        size: (uint)))))
+        size: (number)))))
 
 ===============================================================================
 Dynamic array variable declaration
@@ -781,3 +781,22 @@ inventory.RecommendWeapon(rating, bUseAltMode);
       arguments: (arguments
         (identifier)
         (identifier)))))
+
+===============================================================================
+Array variable declaration with constant expression
+===============================================================================
+
+var int MyVariable[10 + 5];
+
+---
+
+(program
+  (variable_declaration
+    type: (type
+      (primitive_type))
+    name: (array_identifier
+      (identifier)
+      (array_dimensions
+        size: (binary_expression
+          left: (number)
+          right: (number))))))

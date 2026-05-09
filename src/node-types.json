@@ -88,10 +88,6 @@
     "named": true,
     "subtypes": [
       {
-        "type": "array_identifier",
-        "named": true
-      },
-      {
         "type": "call_expression",
         "named": true
       },
@@ -247,11 +243,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "uint",
+            "type": "expression",
             "named": true
           }
         ]
@@ -271,31 +263,7 @@
           "named": true
         },
         {
-          "type": "array_identifier",
-          "named": true
-        },
-        {
-          "type": "default",
-          "named": true
-        },
-        {
           "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "nested_identifier",
-          "named": true
-        },
-        {
-          "type": "reference",
-          "named": true
-        },
-        {
-          "type": "self",
-          "named": true
-        },
-        {
-          "type": "super",
           "named": true
         }
       ]
@@ -325,10 +293,6 @@
         "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "array_identifier",
-            "named": true
-          },
           {
             "type": "default",
             "named": true
@@ -1299,10 +1263,6 @@
       "required": false,
       "types": [
         {
-          "type": "array_identifier",
-          "named": true
-        },
-        {
           "type": "default",
           "named": true
         },
@@ -1342,10 +1302,6 @@
         "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "array_identifier",
-            "named": true
-          },
           {
             "type": "default",
             "named": true
@@ -1392,10 +1348,6 @@
         "multiple": false,
         "required": false,
         "types": [
-          {
-            "type": "array_identifier",
-            "named": true
-          },
           {
             "type": "default",
             "named": true
@@ -2118,10 +2070,6 @@
             "named": false
           },
           {
-            "type": "array_identifier",
-            "named": true
-          },
-          {
             "type": "default",
             "named": true
           },
@@ -2162,10 +2110,6 @@
           {
             "type": ",",
             "named": false
-          },
-          {
-            "type": "array_identifier",
-            "named": true
           },
           {
             "type": "default",
