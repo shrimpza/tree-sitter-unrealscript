@@ -636,6 +636,16 @@
     "type": "class_declaration",
     "named": true,
     "fields": {
+      "import": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "modifiers": {
         "multiple": true,
         "required": false,
@@ -2608,6 +2618,10 @@
   },
   {
     "type": "ignores",
+    "named": false
+  },
+  {
+    "type": "imports",
     "named": false
   },
   {

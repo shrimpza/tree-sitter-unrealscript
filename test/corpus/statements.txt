@@ -12,6 +12,20 @@ class MyClass extends ParentClass;
     parent: (identifier)))
 
 ===============================================================================
+Class declaration with imports
+===============================================================================
+
+class MyClass extends ParentClass imports(UtilsClass);
+
+---
+
+(program
+  (class_declaration
+    name: (identifier)
+    parent: (identifier)
+    import: (identifier)))
+
+===============================================================================
 Class modifier declaration
 ===============================================================================
 

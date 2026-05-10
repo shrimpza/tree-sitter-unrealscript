@@ -85,6 +85,7 @@ module.exports = grammar({
 			caseInsensitive('class'),
 			field('name', $.identifier),
 			optional($._declaration_heritage),
+      optional($._imports_modifier),
 			field('modifiers', repeat($.class_modifier)),
 			';',
 		),
@@ -339,8 +340,16 @@ module.exports = grammar({
 				optional($.identifier),
 				')'
 			)),
-		) ,
-		_native_modifier: $ => seq(
+		),
+    _imports_modifier: $ => seq(
+      caseInsensitive('imports'),
+      seq(
+        '(',
+        field('import', optional($.identifier)),
+        ')'
+      ),
+    ),
+    _native_modifier: $ => seq(
 			caseInsensitive('native'),
 			optional(seq(
 				'(',
@@ -389,7 +398,7 @@ module.exports = grammar({
 			choice(caseInsensitive('collapsecategories'), caseInsensitive('dontcollapsecategories')),
 			choice(caseInsensitive('placeable'), caseInsensitive('notplaceable')),
 			choice(caseInsensitive('editinlinenew'), caseInsensitive('noteditinlinenew')),
-			$._config_modifier,
+      $._config_modifier,
 			$._class_depends_modifier,
 			$._class_within_modifier,
 			$._class_display_categories_modifier
