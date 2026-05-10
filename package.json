@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-unrealscript",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "main": "bindings/node",
   "author": "Kenneth Watson",
   "license": "MIT",
@@ -11,5 +11,6 @@
   "devDependencies": {
     "tree-sitter-cli": "^0.26.8"
   },
-  "repository": "https://github.com/shrimpza/tree-sitter-unrealscript"
+  "repository": "https://github.com/shrimpza/tree-sitter-unrealscript",
+  "homepage": "https://github.com/shrimpza/tree-sitter-unrealscript"
 }
